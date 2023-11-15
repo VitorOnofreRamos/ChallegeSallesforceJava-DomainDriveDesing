@@ -1,6 +1,7 @@
 package example.org;
 
 import example.org.funcoes_do_site.ProfilePackage.Cadastro;
+import example.org.funcoes_do_site.ProfilePackage.Login;
 import example.org.funcoes_do_site.ProfilePackage.Usuarios;
 import example.org.paginas_do_site.Home;
 import example.org.paginas_do_site.Products;
@@ -16,8 +17,8 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Scanner;
 
+import static example.org.funcoes_do_site.ProfilePackage.Login.realizarLogin;
 import static example.org.funcoes_do_site.ProfilePackage.Usuarios.getUsuariosCadastrados;
-import static example.org.funcoes_do_site.ProfilePackage.Usuarios.usuariosCadastrados;
 
 public class Main{
     public static void main(String[] args){
@@ -100,10 +101,11 @@ public class Main{
                 case 1:
                     //Cadastro
                     Cadastro novoUsuario = Cadastro.realizarCadastro();
-                    getUsuariosCadastrados().add(novoUsuario);
+                    getUsuariosCadastrados().add((Usuarios) novoUsuario);
                     break;
                 case 2:
                     //Login
+                    realizarLogin();
                     break;
                 case 3:
                     //Trocar de Conta
@@ -128,22 +130,5 @@ public class Main{
                     System.out.println("Opção inválida. Tente novamente.");
             }
         }
-    }
-
-    public static void Login(){
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("\n--Realizando Login--\n");
-
-        System.out.println("Digite seu E-mail Corporativo: ");
-        var emailUsuario = scanner.nextLine();
-        System.out.println("Digite sua Senha: ");
-        var senhaUsuario = scanner.nextLine();
-
-        Optional<Cadastro> optional = usuariosCadastrados.stream()
-                .filter(usuario -> usuario.getEmailCorporativo().equals(emailUsuario) &
-                        usuario.getSenha().equals(senhaUsuario)).findAny();
-
-        if(optional.isPresent()){}
     }
 }
