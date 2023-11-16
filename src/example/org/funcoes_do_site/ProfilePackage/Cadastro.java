@@ -67,6 +67,7 @@ public class Cadastro{
             System.out.println("5. 2001+ funcionários");
 
             int choise = scanner.nextInt();
+            scanner.nextLine();
 
             switch (choise) {
                 case 1 -> novoTamanhoDaEmpresa = "1 - 50 funcionários";

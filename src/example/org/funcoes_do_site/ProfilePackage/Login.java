@@ -28,7 +28,10 @@ public class Login extends Cadastro{
     }
     
     public static void logarUsuario(String email){
-        //String nomeUsuario = Usuarios.getUsuariosCadastrados().stream()
-        //       .filter(u -> u.getEmailCorporativo().equals(email));
+        boolean usuarioLogado;
+        String nomeUsuario = getUsuariosCadastrados().stream()
+               .filter(u -> u.getEmailCorporativo().equals(email))
+                .map(Usuarios::getNome).toString();
+        System.out.println("Bem vindo " + nomeUsuario + "!");
     }
 }
