@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Scanner;
 
+import static example.org.funcoes_do_site.ProfilePackage.Login.logarUsuario;
 import static example.org.funcoes_do_site.ProfilePackage.Login.realizarLogin;
 import static example.org.funcoes_do_site.ProfilePackage.Usuarios.getUsuariosCadastrados;
 
@@ -102,6 +103,7 @@ public class Main{
                     //Cadastro
                     Cadastro novoUsuario = Cadastro.realizarCadastro();
                     getUsuariosCadastrados().add((Usuarios) novoUsuario);
+                    logarUsuario(((Usuarios) novoUsuario).getEmailCorporativo());
                     break;
                 case 2:
                     //Login

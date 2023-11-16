@@ -115,8 +115,6 @@ public class Cadastro{
 
         System.out.println("Cadastro concluído");
 
-        Login.logarUsuario(novoUsuario.getEmailCorporativo());
-
         return novoUsuario;
     }
 
