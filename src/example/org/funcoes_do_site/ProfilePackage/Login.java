@@ -21,13 +21,14 @@ public class Login extends Cadastro{
                         usuario.getSenha().equals(loginSenha)).findAny();
 
         if (optional.isPresent()){
-            logarUsuario();
+            logarUsuario(loginEmail);
         } else {
-            System.out.println("Login ou senha incorreto digite novamente");
+            System.out.println("Login ou senha incorreto(s)! Tente novamente.");
         }
     }
     
-    public static void logarUsuario(){
-        System.out.println("Usuario Logado");
+    public static void logarUsuario(String email){
+        //String nomeUsuario = Usuarios.getUsuariosCadastrados().stream()
+        //       .filter(u -> u.getEmailCorporativo().equals(email));
     }
 }

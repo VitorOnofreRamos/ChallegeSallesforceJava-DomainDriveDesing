@@ -1,8 +1,13 @@
 package example.org.funcoes_do_site.ProfilePackage;
 
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import example.org.funcoes_do_site.ProfilePackage.Usuarios;
+
+import static example.org.funcoes_do_site.ProfilePackage.Usuarios.getUsuariosCadastrados;
 
 public class Cadastro{
     public static Cadastro realizarCadastro(){
@@ -38,10 +43,10 @@ public class Cadastro{
             novoEmailCorporativo = scanner.nextLine();
         }
 
-        System.out.println("Telefone: ");
+        System.out.println("Telefone: \n(Exemplo de número de telefone válido: +11 11 111111111)");
         String novoTelefone = scanner.nextLine();
         while (!validarTelefone(novoTelefone)) {
-            System.out.println("Telefone inválido. Digite um telefone válido: ");
+            System.out.println("Telefone inválido. Digite um telefone válido: \n(Exemplo de número de telefone válido: +11 11 111111111)");
             novoTelefone = scanner.nextLine();
         }
 
@@ -63,24 +68,13 @@ public class Cadastro{
 
             int choise = scanner.nextInt();
 
-            switch (choise){
-                case 1:
-                    novoTamanhoDaEmpresa = "1 - 50 funcionários";
-                    break;
-                case 2:
-                    novoTamanhoDaEmpresa = "51 - 300 funcionários";
-                    break;
-                case 3:
-                    novoTamanhoDaEmpresa = "301 - 1000 funcionários";
-                    break;
-                case 4:
-                    novoTamanhoDaEmpresa = "1001 - 2000 funcionários";
-                    break;
-                case 5:
-                    novoTamanhoDaEmpresa = "2001+ funcionários";
-                    break;
-                default:
-                    System.out.println("Opção inválida. Tente novamente");
+            switch (choise) {
+                case 1 -> novoTamanhoDaEmpresa = "1 - 50 funcionários";
+                case 2 -> novoTamanhoDaEmpresa = "51 - 300 funcionários";
+                case 3 -> novoTamanhoDaEmpresa = "301 - 1000 funcionários";
+                case 4 -> novoTamanhoDaEmpresa = "1001 - 2000 funcionários";
+                case 5 -> novoTamanhoDaEmpresa = "2001+ funcionários";
+                default -> System.out.println("Opção inválida. Tente novamente");
             }
         }
 
@@ -98,6 +92,13 @@ public class Cadastro{
             novoIdioma = scanner.nextLine();
         }
 
+        System.out.println("Tudo certo! Agora digite uma senha de no mínimo 4 dígitos, contendo um caracter especial.");
+        String novaSenha = scanner.nextLine();
+        while (!validarSenha(novaSenha)) {
+            System.out.println("Senha inválida. A senha deve conter no mínimo 4 caracteres, contendo um caracter especial.");
+            novaSenha = scanner.nextLine();
+        }
+
         var novoUsuario = new Usuarios(
                 novoNome,
                 novoSobrenome,
@@ -108,41 +109,72 @@ public class Cadastro{
                 novoTamanhoDaEmpresa,
                 novoPaisRegiao,
                 novoIdioma,
-                ""
+                novaSenha
         );
 
-        System.out.println("Tudo certo! Agora digite uma senha de no mínimo 4 dígitos, contendo um caracter especial.");
-        String novaSenha = scanner.nextLine();
-        while (!validarSenha(novaSenha)) {
-            System.out.println("Senha inválida. A senha deve conter no mínimo 4 caracteres, contendo um caracter especial.");
-            novaSenha = scanner.nextLine();
-        }
-        novoUsuario.setSenha(novaSenha);
+        System.out.println("Cadastro concluído");
+
+        Login.logarUsuario(novoUsuario.getEmailCorporativo());
 
         return novoUsuario;
     }
 
     private static boolean validarEmail(String email) {
-        boolean emailInvalido = false;
-        if (email != null && email.length() > 0) {
+        Optional<Usuarios> optional = getUsuariosCadastrados().stream()
+                .filter(usuario -> usuario.getEmailCorporativo().equals(email)).findAny();
+
+        String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+        Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(email);
+        return matcher.matches() && optional.isEmpty();
+
+
+        //return email.matches("^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$") && optional.isEmpty();
+
+
+        /*if (email != null && email.length() > 0) {
             String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
             Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
             Matcher matcher = pattern.matcher(email);
             if (matcher.matches()) {
                 emailInvalido = true;
+            } else {
+                Optional<Usuarios> optional = getUsuariosCadastrados().stream()
+                        .filter(usuario -> usuario.getEmailCorporativo().equals(email)).findAny();
+                if (optional.isPresent()){
+                    emailInvalido = true;
+                }
             }
-        }
-        return emailInvalido;
-        /*return email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}");*/
+        }*/
+        //return emailInvalido;
     }
 
     private static boolean validarTelefone(String telefone) {
-        // Implemente a lógica de validação do telefone
-        // Pode ser uma verificação de formato específico
-        return telefone.matches("\\d{10,11}");
+        Optional<Usuarios> optional = getUsuariosCadastrados().stream()
+                .filter(usuario -> usuario.getTelefone().equals(telefone)).findAny();
+
+        return telefone.matches("^\\+(?:[0-9] ?){6,14}[0-9]$") && optional.isEmpty();
+
+
+        /*if (telefone != null && telefone.length() > 0) {
+            String expression = "^\\+(?:[0-9] ?){6,14}[0-9]$";
+            Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(telefone);
+            if (matcher.matches()) {
+                telefoneInvalido = true;
+            } else {
+                Optional<Usuarios> optional = getUsuariosCadastrados().stream()
+                        .filter(usuario -> usuario.getEmailCorporativo().equals(telefone)).findAny();
+                if (optional.isPresent()){
+                    telefoneInvalido = true;
+                }
+            }
+        }*/
+        //return telefoneInvalido;
     }
 
     private static boolean validarSenha(String senha) {
+        // Validar senha de no mínimo 4 caracteres e 1 caracter especial
         return senha.length() >= 4 && senha.matches(".*[^a-zA-Z0-9].*");
     }
 }
