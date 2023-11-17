@@ -33,7 +33,7 @@ public class Login extends Cadastro{
         }
     }
     
-    public static void logarUsuario(String email){
+    public static boolean logarUsuario(String email){
         String nomeUsuario;
         Optional<Usuarios> usuarioEncontrado = getUsuariosCadastrados().stream()
                         .filter(u -> u.getEmailCorporativo().equals(email)).findFirst();
@@ -42,7 +42,7 @@ public class Login extends Cadastro{
             nomeUsuario = usuarioEncontrado.get().getNome();
             System.out.println("Bem vindo " + nomeUsuario + "!");
         }
-    }
 
-    public static void sairConta(){}
+        return true;
+    }
 }

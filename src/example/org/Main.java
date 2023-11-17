@@ -1,7 +1,6 @@
 package example.org;
 
 import example.org.funcoes_do_site.ProfilePackage.Cadastro;
-import example.org.funcoes_do_site.ProfilePackage.Login;
 import example.org.funcoes_do_site.ProfilePackage.Usuarios;
 import example.org.paginas_do_site.Home;
 import example.org.paginas_do_site.Products;
@@ -13,8 +12,6 @@ import example.org.funcoes_do_site.SiteFunctions;
 import example.org.funcoes_do_site.AcessibilityMenuPackage.AccessibilityMenu;
 import example.org.funcoes_do_site.ChatBotPackage.Chat;
 
-import java.util.ArrayList;
-import java.util.Optional;
 import java.util.Scanner;
 
 import static example.org.funcoes_do_site.ProfilePackage.Login.logarUsuario;
@@ -23,8 +20,8 @@ import static example.org.funcoes_do_site.ProfilePackage.Usuarios.getUsuariosCad
 
 public class Main{
     public static void main(String[] args){
+        boolean usuarioLogado = false; //Usuário não logou ainda
         Page currentPage = new Home(); // Página Inicial como página padrão
-        SiteFunctions currentFunctionality = null; //Não Ativa Funções
 
         Scanner scanner = new Scanner(System.in);
 
@@ -60,13 +57,13 @@ public class Main{
                   break;
                 case 6:
                   // Simulando oções de Cadastro e Login de um usuário:
-                  Profile();
+                  Profile(usuarioLogado);
                   break;
                 case 7:
-                  currentFunctionality = new Chat();
+                  //currentFunctionality = new Chat();
                   break;
                 case 8:
-                  currentFunctionality = new AccessibilityMenu();
+                  //currentFunctionality = new AccessibilityMenu();
                   break;
                 case 0:
                   System.out.println("Saindo do site. Adeus!");
@@ -75,16 +72,11 @@ public class Main{
                   System.out.println("Opção inválida. Tente novamente.");
             }
 
-            if (currentFunctionality != null){
-                currentFunctionality.executandoFuncoes();
-                currentFunctionality = null;
-            } else {
-                currentPage.showPage();
-            }
+            currentPage.showPage();
         }
     }
 
-    public static void Profile() {
+    public static void Profile(boolean usuarioLogado) {
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -103,17 +95,35 @@ public class Main{
                     //Cadastro
                     Cadastro novoUsuario = Cadastro.realizarCadastro();
                     getUsuariosCadastrados().add((Usuarios) novoUsuario);
-                    logarUsuario(((Usuarios) novoUsuario).getEmailCorporativo());
+                    if (!usuarioLogado) {
+                        usuarioLogado = logarUsuario(((Usuarios) novoUsuario).getEmailCorporativo());
+                    }
+                    else
+                        System.out.print("Você já está logado.");
                     break;
                 case 2:
                     //Login
-                    realizarLogin();
+                    if (!usuarioLogado) {
+                        realizarLogin();
+                    }
+                    else
+                        System.out.print("Você já está logado.");
                     break;
                 case 3:
                     //Trocar de Conta
+                    if ((long) getUsuariosCadastrados().size() <= 1){
+                        System.out.print("Não há outra conta cadatrada.");
+                    } else if (!usuarioLogado) {
+                        System.out.print("Você ainda não logou em nenhuma conta.");
+                    } else {
+                        usuarioLogado = false;
+                        realizarLogin();
+                    }
                     break;
                 case 4:
                     //Sair da Conta
+                    System.out.print("Saindo da conta.");
+                    usuarioLogado = false;
                     break;
                 case 5:
                     //Listar todos os Cadastros

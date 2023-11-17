@@ -17,6 +17,7 @@ public class Cadastro{
 
         System.out.println("Nome: ");
         String novoNome = scanner.nextLine();
+        //while (!novoNome.matches(".*\\S.*")){
         while (!novoNome.matches(".*\\S.*")){
             System.out.println("Nome inválido. Digite um nome válido: ");
             novoNome = scanner.nextLine();
@@ -126,26 +127,6 @@ public class Cadastro{
         Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(email);
         return matcher.matches() && optional.isEmpty();
-
-
-        //return email.matches("^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$") && optional.isEmpty();
-
-
-        /*if (email != null && email.length() > 0) {
-            String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
-            Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(email);
-            if (matcher.matches()) {
-                emailInvalido = true;
-            } else {
-                Optional<Usuarios> optional = getUsuariosCadastrados().stream()
-                        .filter(usuario -> usuario.getEmailCorporativo().equals(email)).findAny();
-                if (optional.isPresent()){
-                    emailInvalido = true;
-                }
-            }
-        }*/
-        //return emailInvalido;
     }
 
     private static boolean validarTelefone(String telefone) {
@@ -153,23 +134,6 @@ public class Cadastro{
                 .filter(usuario -> usuario.getTelefone().equals(telefone)).findAny();
 
         return telefone.matches("^\\+(?:[0-9] ?){6,14}[0-9]$") && optional.isEmpty();
-
-
-        /*if (telefone != null && telefone.length() > 0) {
-            String expression = "^\\+(?:[0-9] ?){6,14}[0-9]$";
-            Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
-            Matcher matcher = pattern.matcher(telefone);
-            if (matcher.matches()) {
-                telefoneInvalido = true;
-            } else {
-                Optional<Usuarios> optional = getUsuariosCadastrados().stream()
-                        .filter(usuario -> usuario.getEmailCorporativo().equals(telefone)).findAny();
-                if (optional.isPresent()){
-                    telefoneInvalido = true;
-                }
-            }
-        }*/
-        //return telefoneInvalido;
     }
 
     private static boolean validarSenha(String senha) {
