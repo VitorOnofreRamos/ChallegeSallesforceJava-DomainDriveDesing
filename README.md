@@ -18,5 +18,4 @@ Os usuários podem interagir com o site através de um menu de opções que ofer
 
 O sistema solicita a entrada do usuário através de números correspondentes às opções apresentadas no menu. Dependendo da escolha, o programa simula a navegação entre páginas ou a interação com o sistema de Cadastro e Login.
 
----
-Insira aqui quaisquer outras informações ou notas importantes sobre o projeto.
+--------
