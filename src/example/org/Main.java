@@ -94,6 +94,7 @@ public class Main{
                 case 1:
                     //Cadastro
                     Cadastro novoUsuario = Cadastro.realizarCadastro();
+                    if (novoUsuario == null) break;
                     getUsuariosCadastrados().add((Usuarios) novoUsuario);
                     if (!usuarioLogado) {
                         usuarioLogado = logarUsuario(((Usuarios) novoUsuario).getEmailCorporativo());

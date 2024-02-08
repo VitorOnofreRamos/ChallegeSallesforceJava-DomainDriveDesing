@@ -13,11 +13,14 @@ public class Cadastro{
     public static Cadastro realizarCadastro(){
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("\n--Realizando Cadastro--\n");
+        System.out.println("\n--Realizando Cadastro--\n (Digite '/back' para voltar)\n");
 
         System.out.println("Nome: ");
         String novoNome = scanner.nextLine();
-        //while (!novoNome.matches(".*\\S.*")){
+        if (novoNome.matches("/back")){
+            System.out.println("Saindo de Cadastro");
+            return null;
+        }
         while (!novoNome.matches(".*\\S.*")){
             System.out.println("Nome inválido. Digite um nome válido: ");
             novoNome = scanner.nextLine();
@@ -25,6 +28,10 @@ public class Cadastro{
 
         System.out.println("Sobrenome: ");
         String novoSobrenome = scanner.nextLine();
+        if (novoSobrenome.matches("/back")){
+            System.out.println("Saindo de Cadastro");
+            return null;
+        }
         while (!novoSobrenome.matches(".*\\S.*")){
             System.out.println("Sobrenome inválido. Digite um sobrenome válido: ");
             novoSobrenome = scanner.nextLine();
@@ -32,6 +39,10 @@ public class Cadastro{
 
         System.out.println("Cargo: ");
         String novoCargo = scanner.nextLine();
+        if (novoCargo.matches("/back")){
+            System.out.println("Saindo de Cadastro");
+            return null;
+        }
         while (!novoCargo.matches(".*\\S.*")){
             System.out.println("Nome do cargo inválido. Digite um cargo válido: ");
             novoCargo = scanner.nextLine();
@@ -39,6 +50,10 @@ public class Cadastro{
 
         System.out.println("E-mail Corporativo: ");
         String novoEmailCorporativo = scanner.nextLine();
+        if (novoEmailCorporativo.matches("/back")){
+            System.out.println("Saindo de Cadastro");
+            return null;
+        }
         while (!validarEmail(novoEmailCorporativo)) {
             System.out.println("E-mail inválido. Digite um e-mail válido: ");
             novoEmailCorporativo = scanner.nextLine();
@@ -46,6 +61,10 @@ public class Cadastro{
 
         System.out.println("Telefone: \n(Exemplo de número de telefone válido: +11 11 111111111)");
         String novoTelefone = scanner.nextLine();
+        if (novoTelefone.matches("/back")){
+            System.out.println("Saindo de Cadastro");
+            return null;
+        }
         while (!validarTelefone(novoTelefone)) {
             System.out.println("Telefone inválido. Digite um telefone válido: \n(Exemplo de número de telefone válido: +11 11 111111111)");
             novoTelefone = scanner.nextLine();
@@ -53,6 +72,10 @@ public class Cadastro{
 
         System.out.println("Empresa: ");
         String novoEmpresa = scanner.nextLine();
+        if (novoEmpresa.matches("/back")){
+            System.out.println("Saindo de Cadastro");
+            return null;
+        }
         while (!novoEmpresa.matches(".*\\S.*")){
             System.out.println("Nome da Empresa Inválida. Digite um nome válido: ");
             novoEmpresa= scanner.nextLine();
@@ -67,21 +90,28 @@ public class Cadastro{
             System.out.println("4. 1001 - 2000 funcionários");
             System.out.println("5. 2001+ funcionários");
 
-            int choise = scanner.nextInt();
-            scanner.nextLine();
+            String choise = scanner.nextLine();
+            if (choise.matches("/back")){
+                System.out.println("Saindo de Cadastro");
+                return null;
+            }
 
             switch (choise) {
-                case 1 -> novoTamanhoDaEmpresa = "1 - 50 funcionários";
-                case 2 -> novoTamanhoDaEmpresa = "51 - 300 funcionários";
-                case 3 -> novoTamanhoDaEmpresa = "301 - 1000 funcionários";
-                case 4 -> novoTamanhoDaEmpresa = "1001 - 2000 funcionários";
-                case 5 -> novoTamanhoDaEmpresa = "2001+ funcionários";
+                case "1" -> novoTamanhoDaEmpresa = "1 - 50 funcionários";
+                case "2" -> novoTamanhoDaEmpresa = "51 - 300 funcionários";
+                case "3" -> novoTamanhoDaEmpresa = "301 - 1000 funcionários";
+                case "4" -> novoTamanhoDaEmpresa = "1001 - 2000 funcionários";
+                case "5" -> novoTamanhoDaEmpresa = "2001+ funcionários";
                 default -> System.out.println("Opção inválida. Tente novamente");
             }
         }
 
         System.out.println("País/Região: ");
         String novoPaisRegiao = scanner.nextLine();
+        if (novoPaisRegiao.matches("/back")){
+            System.out.println("Saindo de Cadastro");
+            return null;
+        }
         while (!novoPaisRegiao.matches(".*\\S.*")){
             System.out.println("País/Região inválido. Digite uma opção válida: ");
             novoPaisRegiao = scanner.nextLine();
@@ -89,6 +119,10 @@ public class Cadastro{
 
         System.out.println("Idioma: ");
         String novoIdioma = scanner.nextLine();
+        if (novoIdioma.matches("/back")){
+            System.out.println("Saindo de Cadastro");
+            return null;
+        }
         while (!novoIdioma.matches(".*\\S.*")){
             System.out.println("Idioma inválido. Digite uma opção válida: ");
             novoIdioma = scanner.nextLine();
@@ -96,6 +130,10 @@ public class Cadastro{
 
         System.out.println("Tudo certo! Agora digite uma senha de no mínimo 4 dígitos, contendo um caracter especial.");
         String novaSenha = scanner.nextLine();
+        if (novaSenha.matches("/back")){
+            System.out.println("Saindo de Cadastro");
+            return null;
+        }
         while (!validarSenha(novaSenha)) {
             System.out.println("Senha inválida. A senha deve conter no mínimo 4 caracteres, contendo um caracter especial.");
             novaSenha = scanner.nextLine();
